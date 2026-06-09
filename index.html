@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swim4fun – Resultados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root{
+    --blue-900:#042C53;--blue-800:#0C447C;--blue-700:#155CA8;--blue-600:#185FA5;
+    --blue-500:#2A7BC8;--blue-400:#378ADD;--blue-200:#85B7EB;--blue-100:#B5D4F4;
+    --blue-50:#E6F1FB;--blue-bg:#F0F6FC;
+    --gold:#E0A82E;--silver:#9AA3AD;--bronze:#C17B4A;
+    --surface:#FFFFFF;--border:#D8E4F0;--border-soft:#E8F0F8;
+    --text:#0E2540;--text-muted:#5B7088;--text-faint:#8FA3B8;
+    --font-main:'DM Sans',sans-serif;--font-mono:'Space Mono',monospace;
+    --radius:14px;--radius-sm:9px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--font-main);font-size:16px;background:radial-gradient(circle at 12% -8%,rgba(55,138,221,0.10),transparent 45%),radial-gradient(circle at 100% 0%,rgba(12,68,124,0.07),transparent 42%),var(--blue-bg);background-attachment:fixed;color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(120deg,var(--blue-900),var(--blue-700));padding:0 1.5rem;display:flex;align-items:center;gap:15px;height:82px;position:sticky;top:0;z-index:100;box-shadow:0 4px 22px rgba(4,44,83,0.28);}
+  .logo-badge{height:58px;width:58px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,0.18);overflow:hidden;padding:5px;}
+  .logo-badge img{max-height:100%;max-width:100%;object-fit:contain;}
+  .header-divider{width:1px;height:42px;background:rgba(255,255,255,0.22);}
+  .header-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.3px;}
+  .header-sub{font-size:13px;color:rgba(255,255,255,0.68);margin-top:2px;}
+  main{max-width:960px;margin:0 auto;padding:1.75rem 1.25rem 4rem;}
+  .hero{text-align:center;margin-bottom:1.5rem;}
+  .hero h1{font-size:30px;font-weight:800;color:var(--blue-900);letter-spacing:-0.5px;margin-bottom:0.4rem;}
+  .hero p{font-size:16px;color:var(--text-muted);max-width:540px;margin:0 auto;line-height:1.55;}
+  #loading{text-align:center;padding:3rem;color:var(--text-muted);font-size:15px;}
+  #loading.error{color:#A32D2D;font-weight:500;}
+  .spinner{width:30px;height:30px;border:3px solid var(--blue-100);border-top-color:var(--blue-500);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .85rem;}
+  #loading.error .spinner{display:none;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .tabs{display:flex;gap:6px;margin-bottom:1.25rem;background:var(--surface);padding:5px;border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 2px 12px rgba(12,68,124,0.05);}
+  .tab-btn{flex:1;height:48px;border:none;background:transparent;cursor:pointer;font-family:var(--font-main);font-size:16px;font-weight:600;color:var(--text-muted);border-radius:var(--radius-sm);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .tab-btn.active{background:linear-gradient(120deg,var(--blue-600),var(--blue-700));color:#fff;box-shadow:0 2px 10px rgba(21,92,168,0.3);}
+  .tab-btn:not(.active):hover{background:var(--blue-50);color:var(--blue-700);}
+  .tab-panel{display:none;}.tab-panel.active{display:block;}
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.5rem;box-shadow:0 2px 16px rgba(12,68,124,0.06);}
+  .panel-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue-600);margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;}
+  .filters-row{display:grid;grid-template-columns:1fr;gap:12px;}
+  .filters-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+  .filter-group label{display:block;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+  .filter-group select,.filter-group input{width:100%;height:46px;padding:0 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:16px;font-family:var(--font-main);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;}
+  .filter-group select:focus,.filter-group input:focus{border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.12);}
+  .filter-group input::placeholder{color:var(--text-faint);}
+  .panel-actions{display:flex;justify-content:flex-end;margin-top:1rem;}
+  .btn-clear{height:40px;padding:0 18px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-sm);color:var(--blue-700);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-main);}
+  .btn-clear:hover{background:var(--blue-100);}
+  .stats-wrap{display:none;margin-bottom:1.5rem;}
+  .stats-wrap.visible{display:block;}
+  .stats-section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:0 2px 8px;}
+  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
+  .stats-grid.podium{grid-template-columns:repeat(3,1fr);}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;box-shadow:0 2px 10px rgba(12,68,124,.04);position:relative;overflow:hidden;}
+  .stat-card .stat-label{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:4px;}
+  .stat-card .stat-value{font-size:30px;font-weight:700;color:var(--blue-700);font-family:var(--font-mono);line-height:1;}
+  .stat-card.medal{border-width:1.5px;}
+  .stat-card.gold{border-color:var(--gold);} .stat-card.gold .stat-value{color:var(--gold);}
+  .stat-card.silver{border-color:var(--silver);} .stat-card.silver .stat-value{color:#6f7780;}
+  .stat-card.bronze{border-color:var(--bronze);} .stat-card.bronze .stat-value{color:var(--bronze);}
+  .stat-card .medal-ico{position:absolute;right:10px;top:8px;font-size:20px;opacity:.9;}
+  .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.85rem;margin-top:1.5rem;}
+  .section-header h2{font-size:14px;font-weight:700;color:var(--blue-800);text-transform:uppercase;letter-spacing:1px;}
+  .section-header .count{font-size:13px;color:var(--text-muted);}
+  .athlete-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:0 2px 14px rgba(12,68,124,.05);}
+  .athlete-card-header{display:flex;align-items:center;gap:14px;padding:17px 18px 15px;background:linear-gradient(110deg,var(--blue-50),var(--surface));border-bottom:1px solid var(--border-soft);}
+  .athlete-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--blue-500),var(--blue-700));color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .athlete-name{font-size:18px;font-weight:700;color:var(--blue-900);}
+  .athlete-meta{font-size:13px;color:var(--text-muted);margin-top:2px;}
+  .result-header-row,.result-row{display:grid;grid-template-columns:1.6fr 70px 86px 76px 76px;align-items:center;gap:8px;}
+  .result-header-row{padding:9px 18px;background:var(--blue-bg);border-bottom:1px solid var(--border-soft);}
+  .result-header-row span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);text-align:center;}
+  .result-header-row span:first-child{text-align:left;}
+  .result-row{padding:13px 18px;border-bottom:1px solid var(--border-soft);}
+  .result-row:last-child{border-bottom:none;}.result-row:hover{background:var(--blue-50);}
+  .result-prova{font-size:14px;font-weight:600;color:var(--text);}
+  .result-prova small{display:block;font-size:12px;font-weight:400;color:var(--text-faint);margin-top:1px;}
+  .result-dist{font-size:13px;font-weight:600;background:var(--blue-100);color:var(--blue-800);padding:5px 8px;border-radius:20px;text-align:center;}
+  .result-time{font-family:var(--font-mono);font-size:14px;color:var(--text);text-align:center;font-weight:700;}
+  .result-lugar{font-family:var(--font-mono);font-size:15px;text-align:center;font-weight:700;}
+  .result-lugar small{display:block;font-size:9px;color:var(--text-faint);font-family:var(--font-main);font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
+  .result-lugar.top1{color:var(--gold);}.result-lugar.top2{color:var(--silver);}.result-lugar.top3{color:var(--bronze);}.result-lugar.rest{color:var(--blue-600);}
+  /* TEAM TAB — bigger, positions only, medal images */
+  .team-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin-top:.5rem;}
+  .team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 3px 18px rgba(12,68,124,.07);display:flex;align-items:center;gap:18px;padding:22px 24px;}
+  .team-card.p1{border-color:#EBC65A;background:linear-gradient(120deg,#FFFBF0,#FFFFFF);}
+  .team-card.p2{border-color:#C8CDD3;background:linear-gradient(120deg,#FAFBFC,#FFFFFF);}
+  .team-card.p3{border-color:#DDB089;background:linear-gradient(120deg,#FFFAF5,#FFFFFF);}
+  .medal-wrap{flex-shrink:0;}
+  .medal-wrap svg{display:block;width:64px;height:84px;}
+  .team-info{flex:1;}
+  .team-place{font-size:30px;font-weight:800;line-height:1;letter-spacing:-0.5px;}
+  .team-place.p1{color:var(--gold);}.team-place.p2{color:#6f7780;}.team-place.p3{color:var(--bronze);}.team-place.pn{color:var(--blue-700);}
+  .team-place .lugar-txt{font-size:16px;font-weight:600;color:var(--text-muted);margin-left:4px;}
+  .team-meta{font-size:16px;font-weight:600;color:var(--blue-900);margin-top:8px;}
+  .team-meta small{display:block;font-size:13px;font-weight:400;color:var(--text-muted);margin-top:2px;}
+  .prompt-state,.empty-state{text-align:center;padding:3.5rem 1.5rem;background:var(--surface);border:1.5px dashed var(--border);border-radius:var(--radius);color:var(--text-muted);}
+  .prompt-state .icon,.empty-state .icon{font-size:2.9rem;margin-bottom:.75rem;}
+  .prompt-state h3{font-size:18px;font-weight:700;color:var(--blue-800);margin-bottom:.4rem;}
+  .prompt-state p,.empty-state p{font-size:15px;line-height:1.5;max-width:420px;margin:0 auto;}
+  footer{text-align:center;padding:2rem 1rem;font-size:13px;color:var(--text-faint);}
+  footer a{color:var(--blue-600);text-decoration:none;}
+  @media(max-width:620px){
+    .result-header-row,.result-row{grid-template-columns:1fr 50px 70px 54px 54px;gap:5px;padding-left:12px;padding-right:12px;}
+    .filters-row2{grid-template-columns:1fr;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .stats-grid.podium{grid-template-columns:repeat(3,1fr);}
+    main{padding:1.25rem 1rem 3rem;}
+    .hero h1{font-size:24px;}.header-title{font-size:17px;}
+    .stat-card .stat-value{font-size:24px;}
+    .team-card{padding:18px;gap:14px;}
+    .team-place{font-size:26px;}
+    .medal-wrap svg{width:54px;height:72px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-badge">
+    <img src="https://clube-swim4fun.pt/wp-content/uploads/2024/11/cropped-logo-removebg-preview.png"
+         alt="Swim4fun"
+         onerror="this.onerror=null;this.outerHTML='<svg viewBox=\'0 0 44 44\' xmlns=\'http://www.w3.org/2000/svg\'><g fill=\'none\' stroke=\'%23155CA8\' stroke-width=\'3\' stroke-linecap=\'round\'><path d=\'M6 16 q5 -6 10 0 t10 0 t10 0\'/><path d=\'M6 24 q5 -6 10 0 t10 0 t10 0\'/><path d=\'M6 32 q5 -6 10 0 t10 0 t10 0\'/></g></svg>';">
+  </div>
+  <div class="header-divider"></div>
+  <div>
+    <div class="header-title">Resultados Swim4fun</div>
+    <div class="header-sub">Natação em Águas Abertas · Época 2026</div>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <h1>Resultados Swim4fun</h1>
+    <p>Pesquisa por atleta, prova ou distância e vê os tempos, classificações e o lugar da equipa Swim4fun.</p>
+  </div>
+
+  <div id="loading"><div class="spinner"></div>A obter dados mais recentes…</div>
+
+  <div class="tabs" id="tabs" style="display:none;">
+    <button class="tab-btn active" data-tab="atletas">🏊 Atletas</button>
+    <button class="tab-btn" data-tab="equipas">🏅 Equipa</button>
+  </div>
+
+  <!-- TAB ATLETAS -->
+  <div class="tab-panel active" id="tab-atletas">
+    <div class="panel" id="search-panel" style="display:none;">
+      <div class="panel-label">🔍 Filtros de pesquisa</div>
+      <div class="filters-row">
+        <div class="filter-group"><label>Nome do atleta</label><input type="text" id="filter-name" placeholder="Escreve o nome ou parte dele…" oninput="applyFilters()"></div>
+      </div>
+      <div class="filters-row2">
+        <div class="filter-group"><label>Modalidade</label><select id="filter-modal" onchange="applyFilters()"><option value="">Todas as modalidades</option></select></div>
+        <div class="filter-group"><label>Prova</label><select id="filter-prova" onchange="applyFilters()"><option value="">Todas as provas</option></select></div>
+      </div>
+      <div class="filters-row2">
+        <div class="filter-group"><label>Distância</label><select id="filter-dist" onchange="applyFilters()"><option value="">Todas as distâncias</option></select></div>
+        <div class="filter-group" style="display:flex;align-items:flex-end;"><button class="btn-clear" style="width:100%;height:46px;" onclick="clearFilters()">× Limpar filtros</button></div>
+      </div>
+    </div>
+
+    <div class="stats-wrap" id="stats-wrap">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Provas</div><div class="stat-value" id="stat-provas">–</div></div>
+        <div class="stat-card"><div class="stat-label">Atletas</div><div class="stat-value" id="stat-atletas">–</div></div>
+      </div>
+      <div class="stats-section-label">🏆 Pódios individuais</div>
+      <div class="stats-grid podium">
+        <div class="stat-card medal gold"><span class="medal-ico">🥇</span><div class="stat-label">1.º lugar</div><div class="stat-value" id="stat-ind1">–</div></div>
+        <div class="stat-card medal silver"><span class="medal-ico">🥈</span><div class="stat-label">2.º lugar</div><div class="stat-value" id="stat-ind2">–</div></div>
+        <div class="stat-card medal bronze"><span class="medal-ico">🥉</span><div class="stat-label">3.º lugar</div><div class="stat-value" id="stat-ind3">–</div></div>
+      </div>
+      <div class="stats-section-label">🏅 Pódios por equipa</div>
+      <div class="stats-grid podium">
+        <div class="stat-card medal gold"><span class="medal-ico">🥇</span><div class="stat-label">1.º lugar</div><div class="stat-value" id="stat-team1">–</div></div>
+        <div class="stat-card medal silver"><span class="medal-ico">🥈</span><div class="stat-label">2.º lugar</div><div class="stat-value" id="stat-team2">–</div></div>
+        <div class="stat-card medal bronze"><span class="medal-ico">🥉</span><div class="stat-label">3.º lugar</div><div class="stat-value" id="stat-team3">–</div></div>
+      </div>
+    </div>
+
+    <div id="results-area"></div>
+  </div>
+
+  <!-- TAB EQUIPAS -->
+  <div class="tab-panel" id="tab-equipas">
+    <div class="panel" id="team-panel" style="display:none;">
+      <div class="panel-label">🏅 Classificação por equipa</div>
+      <div class="filters-row2">
+        <div class="filter-group"><label>Modalidade</label><select id="team-modal" onchange="renderTeamView()"><option value="">Todas as modalidades</option></select></div>
+        <div class="filter-group"><label>Prova</label><select id="team-prova" onchange="renderTeamView()"><option value="">Todas as provas</option></select></div>
+      </div>
+      <div class="filters-row2">
+        <div class="filter-group"><label>Distância</label><select id="team-dist" onchange="renderTeamView()"><option value="">Todas as distâncias</option></select></div>
+      </div>
+    </div>
+    <div id="team-area"></div>
+  </div>
+</main>
+
+<footer>Dados oficiais Oeiras Open Water Race · Clube Swim4fun · <a href="https://clube-swim4fun.pt" target="_blank">clube-swim4fun.pt</a></footer>
+
+<script>
+// ════════════════════════════════════════════════════════════════════════════
+//  CONFIGURAÇÃO
+//  OPÇÃO A — GITHUB (atual): Excel na mesma pasta do index.html.
+//  OPÇÃO B — GOOGLE SHEETS: cola o ID em SHEET_ID.
+// ════════════════════════════════════════════════════════════════════════════
+const SHEET_ID   = "";
+const EXCEL_FILE = "SWIM4FUN2026.xlsx";
+const SHEET_GERAL  = "Class. Geral";
+const SHEET_EQUIPA = "Classificação Equipa";
+// ════════════════════════════════════════════════════════════════════════════
+
+const USE_SHEETS = SHEET_ID && !SHEET_ID.includes("COLA_AQUI");
+let allData=[], teamData=[];
+
+function gvizUrl(name){return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(name)}&t=${Date.now()}`;}
+
+window.addEventListener('DOMContentLoaded',()=>{setupTabs();loadData();});
+
+async function loadData(){
+  try{
+    if(USE_SHEETS){
+      const [g,e]=await Promise.all([
+        fetch(gvizUrl(SHEET_GERAL)).then(r=>{if(!r.ok)throw new Error('Folha "'+SHEET_GERAL+'" não acessível');return r.text();}),
+        fetch(gvizUrl(SHEET_EQUIPA)).then(r=>r.ok?r.text():'').catch(()=>'')
+      ]);
+      parseGeralRows(csvToRows(g)); if(e) parseEquipaRows(csvToRows(e));
+    }else{
+      const url=EXCEL_FILE+(EXCEL_FILE.includes('?')?'&':'?')+'t='+Date.now();
+      const resp=await fetch(url);
+      if(!resp.ok) throw new Error('Ficheiro "'+EXCEL_FILE+'" não encontrado (HTTP '+resp.status+')');
+      parseWorkbook(await resp.arrayBuffer());
+    }
+    if(!allData.length) throw new Error('Sem dados — verifica o ficheiro / partilha');
+
+    document.getElementById('loading').style.display='none';
+    document.getElementById('tabs').style.display='flex';
+    document.getElementById('search-panel').style.display='block';
+    document.getElementById('team-panel').style.display='block';
+    document.getElementById('stats-wrap').classList.add('visible');
+    populateFilters(); updateStats(allData,teamData); showPrompt(); renderTeamView();
+  }catch(err){
+    const ld=document.getElementById('loading');
+    ld.classList.add('error');
+    ld.textContent='Erro ao carregar: '+err.message;
+  }
+}
+
+function parseWorkbook(buf){
+  const wb=XLSX.read(buf,{type:'array'});
+  parseGeralRows(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''}));
+  const i2=wb.SheetNames.findIndex(n=>n.toLowerCase().includes('equipa'));
+  if(i2>=0) parseEquipaRows(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[i2]],{header:1,defval:''}));
+}
+function csvToRows(text){const wb=XLSX.read(text,{type:'string'});return XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''});}
+
+function parseGeralRows(raw){
+  let hi=raw.findIndex(r=>r.some(c=>String(c).toLowerCase().includes('dorsal')));
+  if(hi<0) hi=0;
+  const H=raw[hi].map(h=>String(h).trim().toLowerCase());
+  const idx={prova:H.findIndex(h=>h.includes('prova')),data:H.findIndex(h=>h.includes('data')),modal:H.findIndex(h=>h.includes('modalidade')),dist:H.findIndex(h=>h.includes('dist')),geral:H.findIndex(h=>h.includes('classifica')&&h.includes('geral')),dorsal:H.findIndex(h=>h.includes('dorsal')),nome:H.findIndex(h=>h.includes('nome')),tempo:H.findIndex(h=>h.includes('tempo')),ritmo:H.findIndex(h=>h.includes('ritmo')),sexo:H.findIndex(h=>h.includes('sexo')),ag:H.findIndex(h=>h.includes('age')||h.includes('grupo')||h.includes('escal')),agc:H.findIndex(h=>h.includes('classifica')&&(h.includes('ag')||h.includes('escal')))};
+  allData=raw.slice(hi+1).filter(r=>r[idx.nome]&&r[idx.dorsal]).map(r=>({
+    prova:String(r[idx.prova]||''),data:fmtDate(r[idx.data]),modal:String(r[idx.modal]||'').trim(),dist:String(r[idx.dist]||'').trim(),
+    geral:Number(r[idx.geral]||0),dorsal:Number(r[idx.dorsal]||0),nome:String(r[idx.nome]||'').trim(),
+    tempo:String(r[idx.tempo]||''),sexo:String(r[idx.sexo]||''),ag:String(r[idx.ag]||''),
+    agc:Number(r[idx.agc]||0)
+  }));
+}
+function parseEquipaRows(raw){
+  let hi=raw.findIndex(r=>r.some(c=>String(c).toLowerCase().includes('prova')));
+  if(hi<0) return;
+  const H=raw[hi].map(h=>String(h).trim().toLowerCase());
+  const e={prova:H.findIndex(h=>h.includes('prova')),modal:H.findIndex(h=>h.includes('modalidade')),dist:H.findIndex(h=>h.includes('dist')),lugar:H.findIndex(h=>h.includes('lugar'))};
+  teamData=raw.slice(hi+1).filter(r=>r[e.prova]).map(r=>({prova:String(r[e.prova]||''),modal:String(r[e.modal]||'').trim(),dist:String(r[e.dist]||'').trim(),lugar:String(r[e.lugar]||'')}));
+}
+function fmtDate(v){if(!v) return '';if(typeof v==='number'){const d=new Date(Math.round((v-25569)*86400*1000));return isNaN(d)?String(v):d.toLocaleDateString('pt-PT');}return String(v);}
+
+// Chave de identidade do atleta: primeiro + último nome normalizados
+// (assim "Mayra Lima" e "Mayra Gabriela Lima" contam como a mesma pessoa)
+function nameKey(name){
+  const parts=String(name).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z\s]/g,'').trim().split(/\s+/).filter(Boolean);
+  if(parts.length===0) return '';
+  if(parts.length===1) return parts[0];
+  return parts[0]+' '+parts[parts.length-1];
+}
+
+function setupTabs(){
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+// Distância pode ser número (750/1500/3000) ou texto ("4x100 Estilos")
+function distLabel(d){const s=String(d).trim();return /^\d+$/.test(s)?s+'m':s;}
+function distKey(d){return String(d).trim();}
+
+function populateFilters(){
+  const provas=[...new Set(allData.map(d=>d.prova))].filter(Boolean).sort();
+  const modais=[...new Set(allData.map(d=>d.modal))].filter(Boolean).sort();
+  const dists=[...new Set(allData.map(d=>distKey(d.dist)))].filter(Boolean).sort((a,b)=>{const na=parseInt(a),nb=parseInt(b);if(!isNaN(na)&&!isNaN(nb))return na-nb;return a.localeCompare(b);});
+  ['filter-modal','team-modal'].forEach(id=>{const s=document.getElementById(id);modais.forEach(m=>s.innerHTML+=`<option value="${m}">${m}</option>`);});
+  ['filter-prova','team-prova'].forEach(id=>{const s=document.getElementById(id);provas.forEach(p=>s.innerHTML+=`<option value="${p}">${p}</option>`);});
+  ['filter-dist','team-dist'].forEach(id=>{const s=document.getElementById(id);dists.forEach(d=>s.innerHTML+=`<option value="${d}">${distLabel(d)}</option>`);});
+}
+
+function currentFilteredData(){
+  const nameQ=document.getElementById('filter-name').value.toLowerCase().trim();
+  const modalQ=document.getElementById('filter-modal').value;
+  const provaQ=document.getElementById('filter-prova').value;
+  const distQ=document.getElementById('filter-dist').value;
+  let f=allData;
+  if(nameQ) f=f.filter(d=>d.nome.toLowerCase().includes(nameQ));
+  if(modalQ) f=f.filter(d=>d.modal===modalQ);
+  if(provaQ) f=f.filter(d=>d.prova===provaQ);
+  if(distQ) f=f.filter(d=>distKey(d.dist)===distQ);
+  return {f,nameQ,modalQ,provaQ,distQ};
+}
+function anyFilterActive(){const {nameQ,modalQ,provaQ,distQ}=currentFilteredData();return nameQ||modalQ||provaQ||distQ;}
+
+function applyFilters(){
+  const {f}=currentFilteredData();
+  updateStats(f,filterTeamsByCurrent());
+  if(!anyFilterActive()){ showPrompt(); return; }
+  renderResults(f);
+}
+
+function filterTeamsByCurrent(){
+  const modalQ=document.getElementById('filter-modal').value;
+  const provaQ=document.getElementById('filter-prova').value;
+  const distQ=document.getElementById('filter-dist').value;
+  let t=teamData;
+  if(modalQ) t=t.filter(x=>x.modal===modalQ);
+  if(provaQ) t=t.filter(x=>x.prova===provaQ);
+  if(distQ) t=t.filter(x=>distKey(x.dist)===distQ);
+  return t;
+}
+
+function clearFilters(){
+  ['filter-name','filter-modal','filter-prova','filter-dist'].forEach(id=>document.getElementById(id).value='');
+  updateStats(allData,teamData);
+  showPrompt();
+}
+
+function showPrompt(){
+  document.getElementById('results-area').innerHTML=`<div class="prompt-state"><div class="icon">🏊‍♂️</div><h3>Escolhe um filtro para ver os resultados</h3><p>Escreve o teu nome, ou seleciona uma prova / distância. As caixas em cima mostram sempre o resumo.</p></div>`;
+}
+
+function updateStats(data, teams){
+  document.getElementById('stat-provas').textContent=new Set(data.map(d=>d.prova+'|'+distKey(d.dist))).size;
+  document.getElementById('stat-atletas').textContent=new Set(data.map(d=>nameKey(d.nome))).size;
+  document.getElementById('stat-ind1').textContent=data.filter(d=>d.agc===1).length;
+  document.getElementById('stat-ind2').textContent=data.filter(d=>d.agc===2).length;
+  document.getElementById('stat-ind3').textContent=data.filter(d=>d.agc===3).length;
+  document.getElementById('stat-team1').textContent=teams.filter(t=>parseInt(t.lugar)===1).length;
+  document.getElementById('stat-team2').textContent=teams.filter(t=>parseInt(t.lugar)===2).length;
+  document.getElementById('stat-team3').textContent=teams.filter(t=>parseInt(t.lugar)===3).length;
+}
+
+function initials(n){return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();}
+function placeClass(n){const x=parseInt(n);return x===1?'top1':x===2?'top2':x===3?'top3':'rest';}
+function teamPlaceClass(l){const x=parseInt(l);return x===1?'p1':x===2?'p2':x===3?'p3':'pn';}
+
+function renderResults(data){
+  const area=document.getElementById('results-area'); area.innerHTML='';
+  if(!data.length){area.innerHTML=`<div class="empty-state"><div class="icon">🔍</div><p>Nenhum resultado encontrado para esta pesquisa.<br>Tenta outro nome, prova ou distância.</p></div>`;return;}
+  // Agrupa por pessoa (nome normalizado), juntando dorsais/provas diferentes
+  const byA={};
+  data.forEach(d=>{
+    const k=nameKey(d.nome);
+    if(!byA[k]) byA[k]={nome:d.nome,ag:d.ag,sexo:d.sexo,rows:[]};
+    if(d.nome.length>byA[k].nome.length) byA[k].nome=d.nome; // fica com a versão mais completa
+    byA[k].rows.push(d);
+  });
+  const athletes=Object.values(byA).sort((a,b)=>a.nome.localeCompare(b.nome));
+  const totalRes=data.length;
+  const sh=document.createElement('div'); sh.className='section-header';
+  sh.innerHTML=`<h2>Atletas</h2><span class="count">${athletes.length} atleta${athletes.length!==1?'s':''} · ${totalRes} resultado${totalRes!==1?'s':''}</span>`;
+  area.appendChild(sh);
+  athletes.forEach(ath=>{
+    const card=document.createElement('div'); card.className='athlete-card';
+    card.innerHTML=`
+      <div class="athlete-card-header"><div class="athlete-avatar">${initials(ath.nome)}</div><div><div class="athlete-name">${ath.nome}</div><div class="athlete-meta">${ath.sexo} · ${ath.ag}</div></div></div>
+      <div class="result-header-row"><span>Prova</span><span>Dist.</span><span>Tempo</span><span>Geral</span><span>Escalão</span></div>
+      ${ath.rows.sort((a,b)=>a.prova.localeCompare(b.prova)||(parseInt(a.dist)||999)-(parseInt(b.dist)||999)).map(r=>`
+        <div class="result-row">
+          <div class="result-prova">${r.prova}<small>${r.data}</small></div>
+          <div class="result-dist">${distLabel(r.dist)}</div>
+          <div class="result-time">${r.tempo}</div>
+          <div class="result-lugar ${placeClass(r.geral)}">${r.geral?r.geral+'º':'–'}<small>geral</small></div>
+          <div class="result-lugar ${placeClass(r.agc)}">${r.agc?r.agc+'º':'–'}<small>escalão</small></div>
+        </div>`).join('')}`;
+    area.appendChild(card);
+  });
+}
+
+// Medalha em SVG (ouro/prata/bronze para 1/2/3; disco azul para os restantes)
+function medalSVG(place){
+  const x=parseInt(place)||0;
+  const pal={
+    1:{l:'#FCE7A0',m:'#E6B23C',d:'#B8860B',rb1:'#2A7BC8',rb2:'#155CA8'},
+    2:{l:'#EDEFF2',m:'#AeB4Bb',d:'#7A828B',rb1:'#2A7BC8',rb2:'#155CA8'},
+    3:{l:'#E6C29B',m:'#C8895A',d:'#8B5A2B',rb1:'#2A7BC8',rb2:'#155CA8'}
+  };
+  const p=pal[x];
+  if(!p){
+    return `<svg viewBox="0 0 64 84" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="50" r="26" fill="#E6F1FB" stroke="#185FA5" stroke-width="2.5"/>
+      <text x="32" y="50" text-anchor="middle" dominant-baseline="central" font-family="Space Mono, monospace" font-size="24" font-weight="700" fill="#155CA8">${x||'–'}</text>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 64 84" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="mg${x}" cx="38%" cy="32%" r="75%">
+        <stop offset="0%" stop-color="${p.l}"/><stop offset="55%" stop-color="${p.m}"/><stop offset="100%" stop-color="${p.d}"/>
+      </radialGradient>
+    </defs>
+    <path d="M20 4 L30 44 L22 48 L12 10 Z" fill="${p.rb1}"/>
+    <path d="M44 4 L34 44 L42 48 L52 10 Z" fill="${p.rb2}"/>
+    <circle cx="32" cy="54" r="27" fill="${p.d}"/>
+    <circle cx="32" cy="54" r="24" fill="url(#mg${x})" stroke="${p.d}" stroke-width="1.5"/>
+    <circle cx="32" cy="54" r="18" fill="none" stroke="${p.d}" stroke-width="1" opacity="0.45"/>
+    <text x="32" y="55" text-anchor="middle" dominant-baseline="central" font-family="Space Mono, monospace" font-size="22" font-weight="700" fill="#5A3F12">${x}</text>
+  </svg>`;
+}
+
+function renderTeamView(){
+  const area=document.getElementById('team-area'); area.innerHTML='';
+  if(!teamData.length){area.innerHTML=`<div class="empty-state"><div class="icon">🏅</div><p>Não há classificações de equipa disponíveis.</p></div>`;return;}
+  const modalQ=document.getElementById('team-modal').value;
+  const provaQ=document.getElementById('team-prova').value;
+  const distQ=document.getElementById('team-dist').value;
+  let teams=teamData;
+  if(modalQ) teams=teams.filter(t=>t.modal===modalQ);
+  if(provaQ) teams=teams.filter(t=>t.prova===provaQ);
+  if(distQ) teams=teams.filter(t=>distKey(t.dist)===distQ);
+  if(!teams.length){area.innerHTML=`<div class="empty-state"><div class="icon">🔍</div><p>Nenhuma classificação de equipa para esta seleção.</p></div>`;return;}
+  const sh=document.createElement('div'); sh.className='section-header';
+  sh.innerHTML=`<h2>Classificação Swim4fun</h2><span class="count">${teams.length} prova${teams.length!==1?'s':''}</span>`;
+  area.appendChild(sh);
+  const grid=document.createElement('div'); grid.className='team-cards-grid';
+  teams.sort((a,b)=>parseInt(a.lugar)-parseInt(b.lugar)||a.prova.localeCompare(b.prova)).forEach(t=>{
+    const pc=teamPlaceClass(t.lugar);
+    const num=String(t.lugar).replace('º','');
+    grid.innerHTML+=`
+      <div class="team-card ${pc}">
+        <div class="medal-wrap">${medalSVG(num)}</div>
+        <div class="team-info">
+          <div class="team-place ${pc}">${num}º<span class="lugar-txt">Lugar</span></div>
+          <div class="team-meta">${t.prova}<small>${distLabel(t.dist)} · ${t.modal||'Equipa Swim4fun'}</small></div>
+        </div>
+      </div>`;
+  });
+  area.appendChild(grid);
+}
+</script>
+</body>
+</html>
