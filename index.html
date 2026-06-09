@@ -19,109 +19,103 @@
     --radius:14px;--radius-sm:9px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:var(--font-main);background:radial-gradient(circle at 12% -8%,rgba(55,138,221,0.10),transparent 45%),radial-gradient(circle at 100% 0%,rgba(12,68,124,0.07),transparent 42%),var(--blue-bg);background-attachment:fixed;color:var(--text);min-height:100vh;}
-  header{background:linear-gradient(120deg,var(--blue-900),var(--blue-700));padding:0 1.5rem;display:flex;align-items:center;gap:14px;height:78px;position:sticky;top:0;z-index:100;box-shadow:0 4px 22px rgba(4,44,83,0.28);}
-  .logo-badge{height:54px;width:54px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,0.18);overflow:hidden;padding:5px;}
+  body{font-family:var(--font-main);font-size:16px;background:radial-gradient(circle at 12% -8%,rgba(55,138,221,0.10),transparent 45%),radial-gradient(circle at 100% 0%,rgba(12,68,124,0.07),transparent 42%),var(--blue-bg);background-attachment:fixed;color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(120deg,var(--blue-900),var(--blue-700));padding:0 1.5rem;display:flex;align-items:center;gap:15px;height:82px;position:sticky;top:0;z-index:100;box-shadow:0 4px 22px rgba(4,44,83,0.28);}
+  .logo-badge{height:58px;width:58px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,0.18);overflow:hidden;padding:5px;}
   .logo-badge img{max-height:100%;max-width:100%;object-fit:contain;}
-  .header-divider{width:1px;height:40px;background:rgba(255,255,255,0.22);}
-  .header-title{font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.3px;}
-  .header-sub{font-size:12px;color:rgba(255,255,255,0.68);margin-top:1px;}
+  .header-divider{width:1px;height:42px;background:rgba(255,255,255,0.22);}
+  .header-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.3px;}
+  .header-sub{font-size:13px;color:rgba(255,255,255,0.68);margin-top:2px;}
   main{max-width:960px;margin:0 auto;padding:1.75rem 1.25rem 4rem;}
   .hero{text-align:center;margin-bottom:1.5rem;}
-  .hero h1{font-size:26px;font-weight:800;color:var(--blue-900);letter-spacing:-0.5px;margin-bottom:0.35rem;}
-  .hero p{font-size:14px;color:var(--text-muted);max-width:520px;margin:0 auto;line-height:1.5;}
-  #status-bar{display:flex;align-items:center;gap:10px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-sm);padding:8px 14px;margin-bottom:1.25rem;font-size:12px;color:var(--blue-800);}
-  #status-bar .dot{width:8px;height:8px;border-radius:50%;background:var(--blue-500);flex-shrink:0;animation:pulse 2s infinite;}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-  #status-bar.error{background:#FDECEC;border-color:#F5C0C0;color:#A32D2D;}
-  #status-bar.error .dot{background:#D85A5A;animation:none;}
-  #status-bar.ok{background:#E7F6EE;border-color:#B6E2C8;color:#1C7A45;}
-  #status-bar.ok .dot{background:#2FA45F;animation:none;}
+  .hero h1{font-size:30px;font-weight:800;color:var(--blue-900);letter-spacing:-0.5px;margin-bottom:0.4rem;}
+  .hero p{font-size:16px;color:var(--text-muted);max-width:540px;margin:0 auto;line-height:1.55;}
+  #loading{text-align:center;padding:3rem;color:var(--text-muted);font-size:15px;}
+  #loading.error{color:#A32D2D;font-weight:500;}
+  .spinner{width:30px;height:30px;border:3px solid var(--blue-100);border-top-color:var(--blue-500);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .85rem;}
+  #loading.error .spinner{display:none;}
+  @keyframes spin{to{transform:rotate(360deg)}}
   .tabs{display:flex;gap:6px;margin-bottom:1.25rem;background:var(--surface);padding:5px;border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 2px 12px rgba(12,68,124,0.05);}
-  .tab-btn{flex:1;height:44px;border:none;background:transparent;cursor:pointer;font-family:var(--font-main);font-size:14px;font-weight:600;color:var(--text-muted);border-radius:var(--radius-sm);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .tab-btn{flex:1;height:48px;border:none;background:transparent;cursor:pointer;font-family:var(--font-main);font-size:16px;font-weight:600;color:var(--text-muted);border-radius:var(--radius-sm);transition:all .18s;display:flex;align-items:center;justify-content:center;gap:8px;}
   .tab-btn.active{background:linear-gradient(120deg,var(--blue-600),var(--blue-700));color:#fff;box-shadow:0 2px 10px rgba(21,92,168,0.3);}
   .tab-btn:not(.active):hover{background:var(--blue-50);color:var(--blue-700);}
   .tab-panel{display:none;}.tab-panel.active{display:block;}
   .panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;margin-bottom:1.5rem;box-shadow:0 2px 16px rgba(12,68,124,0.06);}
-  .panel-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue-600);margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;}
-  .filters-row{display:grid;grid-template-columns:1fr 120px;gap:12px;}
+  .panel-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--blue-600);margin-bottom:0.9rem;display:flex;align-items:center;gap:8px;}
+  .filters-row{display:grid;grid-template-columns:1fr;gap:12px;}
   .filters-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
-  .filter-group label{display:block;font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
-  .filter-group select,.filter-group input{width:100%;height:44px;padding:0 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:14px;font-family:var(--font-main);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;}
+  .filter-group label{display:block;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px;}
+  .filter-group select,.filter-group input{width:100%;height:46px;padding:0 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:16px;font-family:var(--font-main);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s,box-shadow .15s;}
   .filter-group select:focus,.filter-group input:focus{border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,.12);}
   .filter-group input::placeholder{color:var(--text-faint);}
   .panel-actions{display:flex;justify-content:flex-end;margin-top:1rem;}
-  .btn-clear{height:38px;padding:0 18px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-sm);color:var(--blue-700);font-size:13px;font-weight:500;cursor:pointer;font-family:var(--font-main);}
+  .btn-clear{height:40px;padding:0 18px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-sm);color:var(--blue-700);font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-main);}
   .btn-clear:hover{background:var(--blue-100);}
-  /* STATS */
   .stats-wrap{display:none;margin-bottom:1.5rem;}
   .stats-wrap.visible{display:block;}
-  .stats-section-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:0 2px 8px;}
+  .stats-section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:0 2px 8px;}
   .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px;}
   .stats-grid.podium{grid-template-columns:repeat(3,1fr);}
-  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 16px;box-shadow:0 2px 10px rgba(12,68,124,.04);position:relative;overflow:hidden;}
-  .stat-card .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:4px;}
-  .stat-card .stat-value{font-size:26px;font-weight:700;color:var(--blue-700);font-family:var(--font-mono);line-height:1;}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;box-shadow:0 2px 10px rgba(12,68,124,.04);position:relative;overflow:hidden;}
+  .stat-card .stat-label{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--text-muted);margin-bottom:4px;}
+  .stat-card .stat-value{font-size:30px;font-weight:700;color:var(--blue-700);font-family:var(--font-mono);line-height:1;}
   .stat-card.medal{border-width:1.5px;}
   .stat-card.gold{border-color:var(--gold);} .stat-card.gold .stat-value{color:var(--gold);}
   .stat-card.silver{border-color:var(--silver);} .stat-card.silver .stat-value{color:#6f7780;}
   .stat-card.bronze{border-color:var(--bronze);} .stat-card.bronze .stat-value{color:var(--bronze);}
-  .stat-card .medal-ico{position:absolute;right:10px;top:8px;font-size:18px;opacity:.85;}
+  .stat-card .medal-ico{position:absolute;right:10px;top:8px;font-size:20px;opacity:.9;}
   .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.85rem;margin-top:1.5rem;}
-  .section-header h2{font-size:13px;font-weight:700;color:var(--blue-800);text-transform:uppercase;letter-spacing:1px;}
-  .section-header .count{font-size:12px;color:var(--text-muted);}
+  .section-header h2{font-size:14px;font-weight:700;color:var(--blue-800);text-transform:uppercase;letter-spacing:1px;}
+  .section-header .count{font-size:13px;color:var(--text-muted);}
   .athlete-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:0 2px 14px rgba(12,68,124,.05);}
-  .athlete-card-header{display:flex;align-items:center;gap:14px;padding:16px 18px 14px;background:linear-gradient(110deg,var(--blue-50),var(--surface));border-bottom:1px solid var(--border-soft);}
-  .athlete-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--blue-500),var(--blue-700));color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .athlete-name{font-size:16px;font-weight:700;color:var(--blue-900);}
-  .athlete-meta{font-size:12px;color:var(--text-muted);margin-top:2px;}
-  .result-header-row,.result-row{display:grid;grid-template-columns:1.6fr 70px 84px 76px 76px;align-items:center;gap:8px;}
-  .result-header-row{padding:8px 18px;background:var(--blue-bg);border-bottom:1px solid var(--border-soft);}
-  .result-header-row span{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);text-align:center;}
+  .athlete-card-header{display:flex;align-items:center;gap:14px;padding:17px 18px 15px;background:linear-gradient(110deg,var(--blue-50),var(--surface));border-bottom:1px solid var(--border-soft);}
+  .athlete-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--blue-500),var(--blue-700));color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .athlete-name{font-size:18px;font-weight:700;color:var(--blue-900);}
+  .athlete-meta{font-size:13px;color:var(--text-muted);margin-top:2px;}
+  .result-header-row,.result-row{display:grid;grid-template-columns:1.6fr 70px 86px 76px 76px;align-items:center;gap:8px;}
+  .result-header-row{padding:9px 18px;background:var(--blue-bg);border-bottom:1px solid var(--border-soft);}
+  .result-header-row span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);text-align:center;}
   .result-header-row span:first-child{text-align:left;}
-  .result-row{padding:12px 18px;border-bottom:1px solid var(--border-soft);}
+  .result-row{padding:13px 18px;border-bottom:1px solid var(--border-soft);}
   .result-row:last-child{border-bottom:none;}.result-row:hover{background:var(--blue-50);}
-  .result-prova{font-size:13px;font-weight:600;color:var(--text);}
-  .result-prova small{display:block;font-size:11px;font-weight:400;color:var(--text-faint);margin-top:1px;}
-  .result-dist{font-size:12px;font-weight:600;background:var(--blue-100);color:var(--blue-800);padding:4px 8px;border-radius:20px;text-align:center;}
-  .result-time{font-family:var(--font-mono);font-size:13px;color:var(--text);text-align:center;font-weight:700;}
-  .result-lugar{font-family:var(--font-mono);font-size:14px;text-align:center;font-weight:700;}
+  .result-prova{font-size:14px;font-weight:600;color:var(--text);}
+  .result-prova small{display:block;font-size:12px;font-weight:400;color:var(--text-faint);margin-top:1px;}
+  .result-dist{font-size:13px;font-weight:600;background:var(--blue-100);color:var(--blue-800);padding:5px 8px;border-radius:20px;text-align:center;}
+  .result-time{font-family:var(--font-mono);font-size:14px;color:var(--text);text-align:center;font-weight:700;}
+  .result-lugar{font-family:var(--font-mono);font-size:15px;text-align:center;font-weight:700;}
   .result-lugar small{display:block;font-size:9px;color:var(--text-faint);font-family:var(--font-main);font-weight:500;text-transform:uppercase;letter-spacing:.4px;margin-top:1px;}
   .result-lugar.top1{color:var(--gold);}.result-lugar.top2{color:var(--silver);}.result-lugar.top3{color:var(--bronze);}.result-lugar.rest{color:var(--blue-600);}
-  .team-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:.5rem;}
-  .team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 14px rgba(12,68,124,.05);}
-  .team-card-header{padding:14px 18px;display:flex;align-items:center;gap:13px;border-bottom:1px solid var(--border-soft);}
-  .team-card-header.p1{background:linear-gradient(120deg,#FBF0D2,#FDF8EC);}
-  .team-card-header.p2{background:linear-gradient(120deg,#EEF1F4,#F7F9FB);}
-  .team-card-header.p3{background:linear-gradient(120deg,#F6E8DC,#FCF5EE);}
-  .team-card-header.pn{background:linear-gradient(120deg,var(--blue-50),var(--surface));}
-  .place-badge{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;flex-shrink:0;font-family:var(--font-mono);}
-  .place-badge.p1{background:var(--gold);}.place-badge.p2{background:var(--silver);}.place-badge.p3{background:var(--bronze);}.place-badge.pn{background:var(--blue-600);}
-  .team-card-title{font-size:15px;font-weight:700;color:var(--blue-900);}
-  .team-card-title small{font-size:12px;font-weight:400;color:var(--text-muted);display:block;margin-top:2px;}
-  .team-member-list{padding:8px 0;}
-  .team-member{display:flex;align-items:center;justify-content:space-between;padding:7px 18px;font-size:13px;}
-  .team-member:hover{background:var(--blue-bg);}
-  .team-member .mem-name{color:var(--text);font-weight:500;}
-  .team-member .mem-time{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);}
-  .team-member .mem-rank{font-size:11px;color:var(--blue-600);min-width:42px;text-align:right;font-family:var(--font-mono);font-weight:700;}
+  /* TEAM TAB — bigger, positions only, medal images */
+  .team-cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:16px;margin-top:.5rem;}
+  .team-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 3px 18px rgba(12,68,124,.07);display:flex;align-items:center;gap:18px;padding:22px 24px;}
+  .team-card.p1{border-color:#EBC65A;background:linear-gradient(120deg,#FFFBF0,#FFFFFF);}
+  .team-card.p2{border-color:#C8CDD3;background:linear-gradient(120deg,#FAFBFC,#FFFFFF);}
+  .team-card.p3{border-color:#DDB089;background:linear-gradient(120deg,#FFFAF5,#FFFFFF);}
+  .medal-wrap{flex-shrink:0;}
+  .medal-wrap svg{display:block;width:64px;height:84px;}
+  .team-info{flex:1;}
+  .team-place{font-size:30px;font-weight:800;line-height:1;letter-spacing:-0.5px;}
+  .team-place.p1{color:var(--gold);}.team-place.p2{color:#6f7780;}.team-place.p3{color:var(--bronze);}.team-place.pn{color:var(--blue-700);}
+  .team-place .lugar-txt{font-size:16px;font-weight:600;color:var(--text-muted);margin-left:4px;}
+  .team-meta{font-size:16px;font-weight:600;color:var(--blue-900);margin-top:8px;}
+  .team-meta small{display:block;font-size:13px;font-weight:400;color:var(--text-muted);margin-top:2px;}
   .prompt-state,.empty-state{text-align:center;padding:3.5rem 1.5rem;background:var(--surface);border:1.5px dashed var(--border);border-radius:var(--radius);color:var(--text-muted);}
-  .prompt-state .icon,.empty-state .icon{font-size:2.75rem;margin-bottom:.75rem;}
-  .prompt-state h3{font-size:16px;font-weight:700;color:var(--blue-800);margin-bottom:.4rem;}
-  .prompt-state p,.empty-state p{font-size:14px;line-height:1.5;max-width:400px;margin:0 auto;}
-  #loading{text-align:center;padding:3rem;color:var(--text-muted);font-size:13px;}
-  .spinner{width:28px;height:28px;border:3px solid var(--blue-100);border-top-color:var(--blue-500);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .85rem;}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  footer{text-align:center;padding:2rem 1rem;font-size:12px;color:var(--text-faint);}
+  .prompt-state .icon,.empty-state .icon{font-size:2.9rem;margin-bottom:.75rem;}
+  .prompt-state h3{font-size:18px;font-weight:700;color:var(--blue-800);margin-bottom:.4rem;}
+  .prompt-state p,.empty-state p{font-size:15px;line-height:1.5;max-width:420px;margin:0 auto;}
+  footer{text-align:center;padding:2rem 1rem;font-size:13px;color:var(--text-faint);}
   footer a{color:var(--blue-600);text-decoration:none;}
   @media(max-width:620px){
-    .result-header-row,.result-row{grid-template-columns:1fr 52px 70px 56px 56px;gap:5px;padding-left:12px;padding-right:12px;}
-    .filters-row,.filters-row2{grid-template-columns:1fr;}
+    .result-header-row,.result-row{grid-template-columns:1fr 50px 70px 54px 54px;gap:5px;padding-left:12px;padding-right:12px;}
+    .filters-row2{grid-template-columns:1fr;}
     .stats-grid{grid-template-columns:1fr 1fr;}
     .stats-grid.podium{grid-template-columns:repeat(3,1fr);}
     main{padding:1.25rem 1rem 3rem;}
-    .hero h1{font-size:21px;}.header-title{font-size:15px;}
-    .stat-card .stat-value{font-size:21px;}
+    .hero h1{font-size:24px;}.header-title{font-size:17px;}
+    .stat-card .stat-value{font-size:24px;}
+    .team-card{padding:18px;gap:14px;}
+    .team-place{font-size:26px;}
+    .medal-wrap svg{width:54px;height:72px;}
   }
 </style>
 </head>
@@ -142,11 +136,10 @@
 
 <main>
   <div class="hero">
-    <h1>Resultados do Clube</h1>
+    <h1>Resultados Swim4fun</h1>
     <p>Pesquisa por atleta, prova ou distância e vê os tempos, classificações e o lugar da equipa Swim4fun.</p>
   </div>
 
-  <div id="status-bar"><div class="dot"></div><span id="status-text">A carregar resultados…</span></div>
   <div id="loading"><div class="spinner"></div>A obter dados mais recentes…</div>
 
   <div class="tabs" id="tabs" style="display:none;">
@@ -160,16 +153,17 @@
       <div class="panel-label">🔍 Filtros de pesquisa</div>
       <div class="filters-row">
         <div class="filter-group"><label>Nome do atleta</label><input type="text" id="filter-name" placeholder="Escreve o nome ou parte dele…" oninput="applyFilters()"></div>
-        <div class="filter-group"><label>Dorsal</label><input type="number" id="filter-dorsal" placeholder="nº" oninput="applyFilters()"></div>
       </div>
       <div class="filters-row2">
+        <div class="filter-group"><label>Modalidade</label><select id="filter-modal" onchange="applyFilters()"><option value="">Todas as modalidades</option></select></div>
         <div class="filter-group"><label>Prova</label><select id="filter-prova" onchange="applyFilters()"><option value="">Todas as provas</option></select></div>
-        <div class="filter-group"><label>Distância</label><select id="filter-dist" onchange="applyFilters()"><option value="">Todas as distâncias</option></select></div>
       </div>
-      <div class="panel-actions"><button class="btn-clear" onclick="clearFilters()">× Limpar filtros</button></div>
+      <div class="filters-row2">
+        <div class="filter-group"><label>Distância</label><select id="filter-dist" onchange="applyFilters()"><option value="">Todas as distâncias</option></select></div>
+        <div class="filter-group" style="display:flex;align-items:flex-end;"><button class="btn-clear" style="width:100%;height:46px;" onclick="clearFilters()">× Limpar filtros</button></div>
+      </div>
     </div>
 
-    <!-- STATS BOXES -->
     <div class="stats-wrap" id="stats-wrap">
       <div class="stats-grid">
         <div class="stat-card"><div class="stat-label">Provas</div><div class="stat-value" id="stat-provas">–</div></div>
@@ -197,7 +191,10 @@
     <div class="panel" id="team-panel" style="display:none;">
       <div class="panel-label">🏅 Classificação por equipa</div>
       <div class="filters-row2">
+        <div class="filter-group"><label>Modalidade</label><select id="team-modal" onchange="renderTeamView()"><option value="">Todas as modalidades</option></select></div>
         <div class="filter-group"><label>Prova</label><select id="team-prova" onchange="renderTeamView()"><option value="">Todas as provas</option></select></div>
+      </div>
+      <div class="filters-row2">
         <div class="filter-group"><label>Distância</label><select id="team-dist" onchange="renderTeamView()"><option value="">Todas as distâncias</option></select></div>
       </div>
     </div>
@@ -243,17 +240,15 @@ async function loadData(){
     if(!allData.length) throw new Error('Sem dados — verifica o ficheiro / partilha');
 
     document.getElementById('loading').style.display='none';
-    const sb=document.getElementById('status-bar'); sb.classList.add('ok');
-    document.getElementById('status-text').textContent='Resultados atualizados · '+new Set(allData.map(d=>d.dorsal)).size+' atletas · '+allData.length+' resultados';
     document.getElementById('tabs').style.display='flex';
     document.getElementById('search-panel').style.display='block';
     document.getElementById('team-panel').style.display='block';
     document.getElementById('stats-wrap').classList.add('visible');
     populateFilters(); updateStats(allData,teamData); showPrompt(); renderTeamView();
   }catch(err){
-    document.getElementById('loading').style.display='none';
-    const sb=document.getElementById('status-bar'); sb.classList.add('error');
-    document.getElementById('status-text').textContent='Erro ao carregar: '+err.message;
+    const ld=document.getElementById('loading');
+    ld.classList.add('error');
+    ld.textContent='Erro ao carregar: '+err.message;
   }
 }
 
@@ -269,9 +264,9 @@ function parseGeralRows(raw){
   let hi=raw.findIndex(r=>r.some(c=>String(c).toLowerCase().includes('dorsal')));
   if(hi<0) hi=0;
   const H=raw[hi].map(h=>String(h).trim().toLowerCase());
-  const idx={prova:H.findIndex(h=>h.includes('prova')),data:H.findIndex(h=>h.includes('data')),dist:H.findIndex(h=>h.includes('dist')),geral:H.findIndex(h=>h.includes('classifica')&&h.includes('geral')),dorsal:H.findIndex(h=>h.includes('dorsal')),nome:H.findIndex(h=>h.includes('nome')),tempo:H.findIndex(h=>h.includes('tempo')),ritmo:H.findIndex(h=>h.includes('ritmo')),sexo:H.findIndex(h=>h.includes('sexo')),ag:H.findIndex(h=>h.includes('age')||h==='age group'||h.includes('grupo')||h.includes('escal')),agc:H.findIndex(h=>h.includes('classifica')&&(h.includes('ag')||h.includes('escal')))};
+  const idx={prova:H.findIndex(h=>h.includes('prova')),data:H.findIndex(h=>h.includes('data')),modal:H.findIndex(h=>h.includes('modalidade')),dist:H.findIndex(h=>h.includes('dist')),geral:H.findIndex(h=>h.includes('classifica')&&h.includes('geral')),dorsal:H.findIndex(h=>h.includes('dorsal')),nome:H.findIndex(h=>h.includes('nome')),tempo:H.findIndex(h=>h.includes('tempo')),ritmo:H.findIndex(h=>h.includes('ritmo')),sexo:H.findIndex(h=>h.includes('sexo')),ag:H.findIndex(h=>h.includes('age')||h.includes('grupo')||h.includes('escal')),agc:H.findIndex(h=>h.includes('classifica')&&(h.includes('ag')||h.includes('escal')))};
   allData=raw.slice(hi+1).filter(r=>r[idx.nome]&&r[idx.dorsal]).map(r=>({
-    prova:String(r[idx.prova]||''),data:fmtDate(r[idx.data]),dist:String(r[idx.dist]||''),
+    prova:String(r[idx.prova]||''),data:fmtDate(r[idx.data]),modal:String(r[idx.modal]||'').trim(),dist:String(r[idx.dist]||'').trim(),
     geral:Number(r[idx.geral]||0),dorsal:Number(r[idx.dorsal]||0),nome:String(r[idx.nome]||'').trim(),
     tempo:String(r[idx.tempo]||''),sexo:String(r[idx.sexo]||''),ag:String(r[idx.ag]||''),
     agc:Number(r[idx.agc]||0)
@@ -281,10 +276,19 @@ function parseEquipaRows(raw){
   let hi=raw.findIndex(r=>r.some(c=>String(c).toLowerCase().includes('prova')));
   if(hi<0) return;
   const H=raw[hi].map(h=>String(h).trim().toLowerCase());
-  const e={prova:H.findIndex(h=>h.includes('prova')),dist:H.findIndex(h=>h.includes('dist')),lugar:H.findIndex(h=>h.includes('lugar'))};
-  teamData=raw.slice(hi+1).filter(r=>r[e.prova]).map(r=>({prova:String(r[e.prova]||''),dist:String(r[e.dist]||''),lugar:String(r[e.lugar]||'')}));
+  const e={prova:H.findIndex(h=>h.includes('prova')),modal:H.findIndex(h=>h.includes('modalidade')),dist:H.findIndex(h=>h.includes('dist')),lugar:H.findIndex(h=>h.includes('lugar'))};
+  teamData=raw.slice(hi+1).filter(r=>r[e.prova]).map(r=>({prova:String(r[e.prova]||''),modal:String(r[e.modal]||'').trim(),dist:String(r[e.dist]||'').trim(),lugar:String(r[e.lugar]||'')}));
 }
 function fmtDate(v){if(!v) return '';if(typeof v==='number'){const d=new Date(Math.round((v-25569)*86400*1000));return isNaN(d)?String(v):d.toLocaleDateString('pt-PT');}return String(v);}
+
+// Chave de identidade do atleta: primeiro + último nome normalizados
+// (assim "Mayra Lima" e "Mayra Gabriela Lima" contam como a mesma pessoa)
+function nameKey(name){
+  const parts=String(name).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z\s]/g,'').trim().split(/\s+/).filter(Boolean);
+  if(parts.length===0) return '';
+  if(parts.length===1) return parts[0];
+  return parts[0]+' '+parts[parts.length-1];
+}
 
 function setupTabs(){
   document.querySelectorAll('.tab-btn').forEach(btn=>{
@@ -297,58 +301,64 @@ function setupTabs(){
   });
 }
 
+// Distância pode ser número (750/1500/3000) ou texto ("4x100 Estilos")
+function distLabel(d){const s=String(d).trim();return /^\d+$/.test(s)?s+'m':s;}
+function distKey(d){return String(d).trim();}
+
 function populateFilters(){
-  const provas=[...new Set(allData.map(d=>d.prova))].sort();
-  const dists=[...new Set(allData.map(d=>parseInt(d.dist)))].filter(Boolean).sort((a,b)=>a-b);
+  const provas=[...new Set(allData.map(d=>d.prova))].filter(Boolean).sort();
+  const modais=[...new Set(allData.map(d=>d.modal))].filter(Boolean).sort();
+  const dists=[...new Set(allData.map(d=>distKey(d.dist)))].filter(Boolean).sort((a,b)=>{const na=parseInt(a),nb=parseInt(b);if(!isNaN(na)&&!isNaN(nb))return na-nb;return a.localeCompare(b);});
+  ['filter-modal','team-modal'].forEach(id=>{const s=document.getElementById(id);modais.forEach(m=>s.innerHTML+=`<option value="${m}">${m}</option>`);});
   ['filter-prova','team-prova'].forEach(id=>{const s=document.getElementById(id);provas.forEach(p=>s.innerHTML+=`<option value="${p}">${p}</option>`);});
-  ['filter-dist','team-dist'].forEach(id=>{const s=document.getElementById(id);dists.forEach(d=>s.innerHTML+=`<option value="${d}">${d}m</option>`);});
+  ['filter-dist','team-dist'].forEach(id=>{const s=document.getElementById(id);dists.forEach(d=>s.innerHTML+=`<option value="${d}">${distLabel(d)}</option>`);});
 }
 
 function currentFilteredData(){
   const nameQ=document.getElementById('filter-name').value.toLowerCase().trim();
-  const dorsalQ=document.getElementById('filter-dorsal').value.trim();
+  const modalQ=document.getElementById('filter-modal').value;
   const provaQ=document.getElementById('filter-prova').value;
   const distQ=document.getElementById('filter-dist').value;
   let f=allData;
   if(nameQ) f=f.filter(d=>d.nome.toLowerCase().includes(nameQ));
-  if(dorsalQ) f=f.filter(d=>String(d.dorsal)===dorsalQ);
+  if(modalQ) f=f.filter(d=>d.modal===modalQ);
   if(provaQ) f=f.filter(d=>d.prova===provaQ);
-  if(distQ) f=f.filter(d=>String(parseInt(d.dist))===distQ);
-  return {f,nameQ,dorsalQ,provaQ,distQ};
+  if(distQ) f=f.filter(d=>distKey(d.dist)===distQ);
+  return {f,nameQ,modalQ,provaQ,distQ};
 }
-function anyFilterActive(){const {nameQ,dorsalQ,provaQ,distQ}=currentFilteredData();return nameQ||dorsalQ||provaQ||distQ;}
+function anyFilterActive(){const {nameQ,modalQ,provaQ,distQ}=currentFilteredData();return nameQ||modalQ||provaQ||distQ;}
 
 function applyFilters(){
   const {f}=currentFilteredData();
-  // stats reagem sempre aos filtros (mesmo sem filtro = totais globais)
-  const matchTeams=filterTeamsByCurrent();
-  updateStats(f,matchTeams);
+  updateStats(f,filterTeamsByCurrent());
   if(!anyFilterActive()){ showPrompt(); return; }
   renderResults(f);
 }
 
 function filterTeamsByCurrent(){
+  const modalQ=document.getElementById('filter-modal').value;
   const provaQ=document.getElementById('filter-prova').value;
   const distQ=document.getElementById('filter-dist').value;
   let t=teamData;
+  if(modalQ) t=t.filter(x=>x.modal===modalQ);
   if(provaQ) t=t.filter(x=>x.prova===provaQ);
-  if(distQ) t=t.filter(x=>String(parseInt(x.dist))===distQ);
+  if(distQ) t=t.filter(x=>distKey(x.dist)===distQ);
   return t;
 }
 
 function clearFilters(){
-  ['filter-name','filter-dorsal','filter-prova','filter-dist'].forEach(id=>document.getElementById(id).value='');
+  ['filter-name','filter-modal','filter-prova','filter-dist'].forEach(id=>document.getElementById(id).value='');
   updateStats(allData,teamData);
   showPrompt();
 }
 
 function showPrompt(){
-  document.getElementById('results-area').innerHTML=`<div class="prompt-state"><div class="icon">🏊‍♂️</div><h3>Escolhe um filtro para ver os resultados</h3><p>Escreve o teu nome, o teu dorsal, ou seleciona uma prova / distância. As caixas em cima mostram sempre o resumo.</p></div>`;
+  document.getElementById('results-area').innerHTML=`<div class="prompt-state"><div class="icon">🏊‍♂️</div><h3>Escolhe um filtro para ver os resultados</h3><p>Escreve o teu nome, ou seleciona uma prova / distância. As caixas em cima mostram sempre o resumo.</p></div>`;
 }
 
 function updateStats(data, teams){
-  document.getElementById('stat-provas').textContent=new Set(data.map(d=>d.prova+'|'+d.dist)).size;
-  document.getElementById('stat-atletas').textContent=new Set(data.map(d=>d.dorsal)).size;
+  document.getElementById('stat-provas').textContent=new Set(data.map(d=>d.prova+'|'+distKey(d.dist))).size;
+  document.getElementById('stat-atletas').textContent=new Set(data.map(d=>nameKey(d.nome))).size;
   document.getElementById('stat-ind1').textContent=data.filter(d=>d.agc===1).length;
   document.getElementById('stat-ind2').textContent=data.filter(d=>d.agc===2).length;
   document.getElementById('stat-ind3').textContent=data.filter(d=>d.agc===3).length;
@@ -363,51 +373,92 @@ function teamPlaceClass(l){const x=parseInt(l);return x===1?'p1':x===2?'p2':x===
 
 function renderResults(data){
   const area=document.getElementById('results-area'); area.innerHTML='';
-  if(!data.length){area.innerHTML=`<div class="empty-state"><div class="icon">🔍</div><p>Nenhum resultado encontrado para esta pesquisa.<br>Tenta outro nome, dorsal, prova ou distância.</p></div>`;return;}
+  if(!data.length){area.innerHTML=`<div class="empty-state"><div class="icon">🔍</div><p>Nenhum resultado encontrado para esta pesquisa.<br>Tenta outro nome, prova ou distância.</p></div>`;return;}
+  // Agrupa por pessoa (nome normalizado), juntando dorsais/provas diferentes
   const byA={};
-  data.forEach(d=>{if(!byA[d.dorsal])byA[d.dorsal]={nome:d.nome,dorsal:d.dorsal,ag:d.ag,sexo:d.sexo,rows:[]};byA[d.dorsal].rows.push(d);});
+  data.forEach(d=>{
+    const k=nameKey(d.nome);
+    if(!byA[k]) byA[k]={nome:d.nome,ag:d.ag,sexo:d.sexo,rows:[]};
+    if(d.nome.length>byA[k].nome.length) byA[k].nome=d.nome; // fica com a versão mais completa
+    byA[k].rows.push(d);
+  });
   const athletes=Object.values(byA).sort((a,b)=>a.nome.localeCompare(b.nome));
+  const totalRes=data.length;
   const sh=document.createElement('div'); sh.className='section-header';
-  sh.innerHTML=`<h2>Atletas</h2><span class="count">${athletes.length} atleta${athletes.length!==1?'s':''} · ${data.length} resultado${data.length!==1?'s':''}</span>`;
+  sh.innerHTML=`<h2>Atletas</h2><span class="count">${athletes.length} atleta${athletes.length!==1?'s':''} · ${totalRes} resultado${totalRes!==1?'s':''}</span>`;
   area.appendChild(sh);
   athletes.forEach(ath=>{
     const card=document.createElement('div'); card.className='athlete-card';
     card.innerHTML=`
-      <div class="athlete-card-header"><div class="athlete-avatar">${initials(ath.nome)}</div><div><div class="athlete-name">${ath.nome}</div><div class="athlete-meta">Dorsal ${ath.dorsal} · ${ath.sexo} · ${ath.ag}</div></div></div>
+      <div class="athlete-card-header"><div class="athlete-avatar">${initials(ath.nome)}</div><div><div class="athlete-name">${ath.nome}</div><div class="athlete-meta">${ath.sexo} · ${ath.ag}</div></div></div>
       <div class="result-header-row"><span>Prova</span><span>Dist.</span><span>Tempo</span><span>Geral</span><span>Escalão</span></div>
-      ${ath.rows.sort((a,b)=>a.prova.localeCompare(b.prova)||parseInt(a.dist)-parseInt(b.dist)).map(r=>`
+      ${ath.rows.sort((a,b)=>a.prova.localeCompare(b.prova)||(parseInt(a.dist)||999)-(parseInt(b.dist)||999)).map(r=>`
         <div class="result-row">
           <div class="result-prova">${r.prova}<small>${r.data}</small></div>
-          <div class="result-dist">${parseInt(r.dist)}m</div>
+          <div class="result-dist">${distLabel(r.dist)}</div>
           <div class="result-time">${r.tempo}</div>
-          <div class="result-lugar ${placeClass(r.geral)}">${r.geral}º<small>geral</small></div>
+          <div class="result-lugar ${placeClass(r.geral)}">${r.geral?r.geral+'º':'–'}<small>geral</small></div>
           <div class="result-lugar ${placeClass(r.agc)}">${r.agc?r.agc+'º':'–'}<small>escalão</small></div>
         </div>`).join('')}`;
     area.appendChild(card);
   });
 }
 
+// Medalha em SVG (ouro/prata/bronze para 1/2/3; disco azul para os restantes)
+function medalSVG(place){
+  const x=parseInt(place)||0;
+  const pal={
+    1:{l:'#FCE7A0',m:'#E6B23C',d:'#B8860B',rb1:'#2A7BC8',rb2:'#155CA8'},
+    2:{l:'#EDEFF2',m:'#AeB4Bb',d:'#7A828B',rb1:'#2A7BC8',rb2:'#155CA8'},
+    3:{l:'#E6C29B',m:'#C8895A',d:'#8B5A2B',rb1:'#2A7BC8',rb2:'#155CA8'}
+  };
+  const p=pal[x];
+  if(!p){
+    return `<svg viewBox="0 0 64 84" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="50" r="26" fill="#E6F1FB" stroke="#185FA5" stroke-width="2.5"/>
+      <text x="32" y="50" text-anchor="middle" dominant-baseline="central" font-family="Space Mono, monospace" font-size="24" font-weight="700" fill="#155CA8">${x||'–'}</text>
+    </svg>`;
+  }
+  return `<svg viewBox="0 0 64 84" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="mg${x}" cx="38%" cy="32%" r="75%">
+        <stop offset="0%" stop-color="${p.l}"/><stop offset="55%" stop-color="${p.m}"/><stop offset="100%" stop-color="${p.d}"/>
+      </radialGradient>
+    </defs>
+    <path d="M20 4 L30 44 L22 48 L12 10 Z" fill="${p.rb1}"/>
+    <path d="M44 4 L34 44 L42 48 L52 10 Z" fill="${p.rb2}"/>
+    <circle cx="32" cy="54" r="27" fill="${p.d}"/>
+    <circle cx="32" cy="54" r="24" fill="url(#mg${x})" stroke="${p.d}" stroke-width="1.5"/>
+    <circle cx="32" cy="54" r="18" fill="none" stroke="${p.d}" stroke-width="1" opacity="0.45"/>
+    <text x="32" y="55" text-anchor="middle" dominant-baseline="central" font-family="Space Mono, monospace" font-size="22" font-weight="700" fill="#5A3F12">${x}</text>
+  </svg>`;
+}
+
 function renderTeamView(){
   const area=document.getElementById('team-area'); area.innerHTML='';
   if(!teamData.length){area.innerHTML=`<div class="empty-state"><div class="icon">🏅</div><p>Não há classificações de equipa disponíveis.</p></div>`;return;}
+  const modalQ=document.getElementById('team-modal').value;
   const provaQ=document.getElementById('team-prova').value;
   const distQ=document.getElementById('team-dist').value;
   let teams=teamData;
+  if(modalQ) teams=teams.filter(t=>t.modal===modalQ);
   if(provaQ) teams=teams.filter(t=>t.prova===provaQ);
-  if(distQ) teams=teams.filter(t=>String(parseInt(t.dist))===distQ);
+  if(distQ) teams=teams.filter(t=>distKey(t.dist)===distQ);
   if(!teams.length){area.innerHTML=`<div class="empty-state"><div class="icon">🔍</div><p>Nenhuma classificação de equipa para esta seleção.</p></div>`;return;}
   const sh=document.createElement('div'); sh.className='section-header';
   sh.innerHTML=`<h2>Classificação Swim4fun</h2><span class="count">${teams.length} prova${teams.length!==1?'s':''}</span>`;
   area.appendChild(sh);
   const grid=document.createElement('div'); grid.className='team-cards-grid';
-  teams.sort((a,b)=>a.prova.localeCompare(b.prova)||parseInt(a.dist)-parseInt(b.dist)).forEach(t=>{
+  teams.sort((a,b)=>parseInt(a.lugar)-parseInt(b.lugar)||a.prova.localeCompare(b.prova)).forEach(t=>{
     const pc=teamPlaceClass(t.lugar);
-    const members=allData.filter(d=>d.prova===t.prova&&parseInt(d.dist)===parseInt(t.dist)).sort((a,b)=>a.geral-b.geral);
-    const memHtml=members.map(m=>`<div class="team-member"><span class="mem-name">${m.nome}</span><span class="mem-time">${m.tempo}</span><span class="mem-rank">#${m.geral}</span></div>`).join('');
+    const num=String(t.lugar).replace('º','');
     grid.innerHTML+=`
-      <div class="team-card">
-        <div class="team-card-header ${pc}"><div class="place-badge ${pc}">${String(t.lugar).replace('º','')}º</div><div class="team-card-title">Swim4fun<small>${t.prova} · ${parseInt(t.dist)}m</small></div></div>
-        <div class="team-member-list">${memHtml||'<div style="padding:8px 18px;font-size:12px;color:var(--text-faint)">Sem membros registados</div>'}</div>
+      <div class="team-card ${pc}">
+        <div class="medal-wrap">${medalSVG(num)}</div>
+        <div class="team-info">
+          <div class="team-place ${pc}">${num}º<span class="lugar-txt">Lugar</span></div>
+          <div class="team-meta">${t.prova}<small>${distLabel(t.dist)} · ${t.modal||'Equipa Swim4fun'}</small></div>
+        </div>
       </div>`;
   });
   area.appendChild(grid);
